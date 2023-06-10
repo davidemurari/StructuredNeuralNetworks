@@ -1,16 +1,17 @@
 import numpy as np
 import scipy.integrate
 
-def generate(N,M,T,Ntrain,noisy=False):
-    #N : how many points to generate
-    #M : number of time steps (including the initial condition)
-    #T : final time
-    #Ntrain : percentage of points in the training
+
+def generate(N, M, T, Ntrain, noisy=False):
+    # N : how many points to generate
+    # M : number of time steps (including the initial condition)
+    # T : final time
+    # Ntrain : percentage of points in the training
 
     np.random.seed(0)
 
     dim = 3
-    '''dim = 6
+    """dim = 6
 
     k1 = 100/3
     k2 = 1/3
@@ -26,29 +27,28 @@ def generate(N,M,T,Ntrain,noisy=False):
         k1*y[0]*y[1]-k2*y[3],
         k3*y[0]*y[2]-k4*y[4],
         k7*y[0]-k6*y[5]
-    ])'''
+    ])"""
 
     R0 = 1
-    f = lambda t,y: np.array([-R0*y[0]*y[1],
-                            R0*y[0]*y[1] - y[1],
-                            y[1]
-    ])
+    f = lambda t, y: np.array([-R0 * y[0] * y[1], R0 * y[0] * y[1] - y[1], y[1]])
 
-    X = np.random.rand(N,dim)
-    X = X / np.sum(X,axis=1).reshape(-1,1)
+    X = np.random.rand(N, dim)
+    X = X / np.sum(X, axis=1).reshape(-1, 1)
     NN = int(Ntrain * N)
 
-    time = np.linspace(0,T,M)
+    time = np.linspace(0, T, M)
     h = time[1] - time[0]
-    print("Time step: ",h)
-    traj = np.zeros([N,dim,M])
+    print("Time step: ", h)
+    traj = np.zeros([N, dim, M])
     for i in range(N):
-        traj[i,:,:] = scipy.integrate.solve_ivp(f,[0, T],X[i],method='RK45',t_eval=time,rtol=1e-11,atol=1e-11).y
+        traj[i, :, :] = scipy.integrate.solve_ivp(
+            f, [0, T], X[i], method="RK45", t_eval=time, rtol=1e-11, atol=1e-11
+        ).y
 
-    Xtrain, ytrain = traj[:NN,:,0], traj[:NN,:,1:]
-    Xtest, ytest = traj[NN:,:,0], traj[NN:,:,1:]
+    Xtrain, ytrain = traj[:NN, :, 0], traj[:NN, :, 1:]
+    Xtest, ytest = traj[NN:, :, 0], traj[NN:, :, 1:]
 
     if noisy:
-        ytrain += np.random.rand(*ytrain.shape)*0.01 #noisy training trajectories
+        ytrain += np.random.rand(*ytrain.shape) * 0.01  # noisy training trajectories
 
     return Xtrain, ytrain, Xtest, ytest, h

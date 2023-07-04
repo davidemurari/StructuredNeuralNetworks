@@ -1,3 +1,8 @@
 *~
 __pycache__
 .DS_STORE
+*.pdf
+*.png
+*.csv
+*.svg
+/Experiments Appendix/Pixel perturbation

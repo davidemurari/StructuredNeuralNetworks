@@ -9,12 +9,16 @@ The codes are organized into 3 main folders:
 1. **Adversarial Robustness** : here there are two subfolders
     - CIFAR-10
     - CIFAR-100
+
 The folder contains the Jupyter notebooks with the Adversarial Experiments based on Foolbox library. Each of these two directories collects the experiments for the following training regimes presented in the manuscript
-    - Unconstrained ResNet
-    - Naively constrained ResNet
-    - Non-expansive network
-    - Prescribed switching regime
-    - Flexible switching regime.
+
+- Unconstrained ResNet
+- Naively constrained ResNet
+- Non-expansive network
+- Prescribed switching regime
+- Flexible switching regime.
+
+
 We add to each of these subdirectories a short readme file to facilitate running the code.
 
 1. **Experiments Appendix** : here we report the codes for the experiments in Appendix A, where we test the architectures obtained starting with splitting methods introduced in the paper. It is organized in two subfolders, as in the paper.

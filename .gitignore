@@ -6,3 +6,4 @@ __pycache__
 *.csv
 *.svg
 /Experiments Appendix/Pixel perturbation
+data

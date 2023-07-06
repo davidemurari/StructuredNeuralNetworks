@@ -41,10 +41,7 @@ def train(model, margin, criterion, optimizer, scheduler, trainloader, testloade
             optimizer.step()
             
             running_loss += loss.item()
-            times = 1
-
             
-
             if constrain:
                 with torch.no_grad():
                     
@@ -72,11 +69,10 @@ def train(model, margin, criterion, optimizer, scheduler, trainloader, testloade
             print(f"epoch {epoch}, dts_{j} : ",model.seq[j].u.data)
 
         correct = 0
-        reachMargin = 0
         total = 0
         
         model.eval()
-        count = 0
+
         with torch.no_grad():
             norms = []
             nonort = []
@@ -97,7 +93,7 @@ def train(model, margin, criterion, optimizer, scheduler, trainloader, testloade
             print(f"Norms lifting layers: {lift}")
             print(f"Lifting orth viol: {liftOrt}")
             print(f"Norm last linear: {torch.norm(model.FC[-1].weight.data,2).item()}")
-            count = 0
+
             for data in testloader:
                 images, labels = data
                 images, labels = images.to(device), labels.to(device)

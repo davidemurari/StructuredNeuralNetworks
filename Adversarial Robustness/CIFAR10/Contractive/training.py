@@ -22,11 +22,6 @@ def train(model, margin, criterion, optimizer, scheduler, trainloader, testloade
         losses = []
         running_loss = 0
             
-        lip1 = 0
-        lip2 = 0
-        mar1 = 0
-        mar2 = 0
-        
         for j in range(3):
             print(f"epoch {epoch}, rescalings_{j} : ",model.seq[j].rescalings.data)        
 
@@ -47,9 +42,6 @@ def train(model, margin, criterion, optimizer, scheduler, trainloader, testloade
             optimizer.step()
             
             running_loss += loss.item()
-            times = 1
-
-            
 
             if constrain:
                 with torch.no_grad():
@@ -78,7 +70,6 @@ def train(model, margin, criterion, optimizer, scheduler, trainloader, testloade
             print(f"epoch {epoch}, dts_{j} : ",model.seq[j].u.data)
 
         correct = 0
-        reachMargin = 0
         total = 0
         
         model.eval()

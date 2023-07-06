@@ -81,9 +81,11 @@ def compute_spectral_norm(conv, u_init=None, im_size=(3, 32, 32), k=1):
                 lambda v: torch.nn.functional.conv_transpose2d(v, conv.weight, padding=tuple(v//2 for v in conv.weight.shape[2:])),
                 u_init, k)
         
-def conv_block(in_channels, out_channels, pool=False):
-    convo = nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1)
-    layers = [convo]
+def conv_block(in_channels, out_channels, pool=False, bn=False):
+    if bn:
+        layers = [nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1, bias=False), nn.BatchNorm2d(out_channels)]
+    else:
+        layers = [nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1, bias=False)]
     if pool: layers.append(nn.MaxPool2d(2))
     return nn.Sequential(*layers)
 

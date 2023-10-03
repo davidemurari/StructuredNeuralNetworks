@@ -82,7 +82,7 @@ def compute_spectral_norm(conv, u_init=None, im_size=(3, 32, 32), k=1):
                 u_init, k)
         
 def conv_block(in_channels, out_channels, pool=False):
-    convo = nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1)
+    convo = nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1,bias=False)
     layers = [convo]
     if pool: layers.append(nn.MaxPool2d(2))
     return nn.Sequential(*layers)

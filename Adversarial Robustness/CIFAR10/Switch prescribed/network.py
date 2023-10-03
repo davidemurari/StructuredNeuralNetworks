@@ -21,7 +21,7 @@ class CNNBlock(nn.Module):
 
         self.u = torch.nn.Parameter(torch.rand(self.nlayers))
 
-        self.conv1 = conv_block(self.chans, self.nf,pool=False, bn=False)
+        self.conv1 = conv_block(self.chans, self.nf, pool=False)
         
         self.convs = nn.ModuleList([nn.Conv2d(self.nf, self.nf,kernel_size=3,stride=1,padding=1,bias=True) for i in range(self.nlayers)])
 
